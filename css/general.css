@@ -107,3 +107,21 @@ a:active {
     background: #bbbec7;
     color: #626366;
 }
+
+#users-table {
+    border-collapse: collapse;
+}
+
+#users-table td {
+    padding: 5px;
+    border: 1px solid black;
+    font-weight: normal;
+    height: 30px;
+}
+
+#users-table button {
+    padding: 5px;
+    border: 1px solid black;
+    font-weight: normal;
+    height: 30px;
+}
