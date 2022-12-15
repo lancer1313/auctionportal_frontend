@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель модератора</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</head>
+<body class="bg-light">
+    <div class="container">
+        <div class="row mt-3">
+            <div class="row mb-3">
+                <div class="col-1">
+                    <a class="btn btn-primary" href="profile.html">Назад</a>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-1">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-modal">Создать новость</button>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <table class="table table-bordered" id="news-table"></table>
+            </div>
+        </div>
+        <div class="modal fade" id="create-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Создание</h2>
+                        <button class="btn-close" data-bs-dismiss="modal" data-bs-target="#create-modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-floating">
+                                <input type="text" class="pole form-control mb-3" id="title-create" placeholder="title">
+                                <label for="title-create" class="form-label">Заголовок новости</label>
+                                <div class="errors d-none mb-3 text-danger text-center" id="error-title-create"></div>
+                            </div>
+                            <div class="form-floating">
+                                <textarea type="" class="pole form-control mb-3" id="text-create" placeholder="title"></textarea>
+                                <label for="text-create" class="form-label">Текст</label>
+                                <div class="errors d-none mb-3 text-danger text-center" id="error-text-create"></div>
+                            </div>
+                            <label for="image-create" class="form-label">Прикрепленное изображение</label>
+                            <input type="file" class="pole form-control mb-3" id="image-create" placeholder="title">
+                            <div class="errors d-none mb-3 text-danger text-center" id="error-image-create"></div>
+                            <div class="d-none mb-3 text-success text-center" id="success-create"></div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-primary" id="create-news-button">Создать</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="redact-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Редактирование</h2>
+                        <button class="btn-close" data-bs-dismiss="modal" data-bs-target="#redact-modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-floating">
+                                <input type="text" class="pole form-control mb-3" id="title-redact" placeholder="title">
+                                <label for="title-redact" class="form-label">Заголовок новости</label>
+                                <div class="errors d-none mb-3 text-danger text-center" id="error-title-redact"></div>
+                            </div>
+                            <div class="form-floating">
+                                <textarea type="" class="pole form-control mb-3" id="text-redact" placeholder="title"></textarea>
+                                <label for="text-redact" class="form-label">Текст</label>
+                                <div class="errors d-none mb-3 text-danger text-center" id="error-text-redact"></div>
+                            </div>
+                            <label for="image-redact" class="form-label">Прикрепленное изображение</label>
+                            <input type="file" class="pole form-control mb-3" id="image-redact" placeholder="title">
+                            <div class="mb-3 text-center" id="selected-image-div"></div>
+                            <div class="errors d-none mb-3 text-danger text-center" id="error-image-redact"></div>
+                            <div class="d-none mb-3 text-success text-center" id="success-redact"></div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-primary" id="main-redact-button">Редактировать</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/moderator_page.js"></script>
+</body>
+</html>

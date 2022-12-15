@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель администратора</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</head>
+<body class="bg-light">
+    <div class="container">
+        <div class="row mt-3">
+            <div class="row mb-3">
+                <div class="col-1">
+                    <a class="btn btn-primary" href="profile.html">Назад</a>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-1">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-modal">Добавить пользователя</button>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <table class="table table-bordered" id="users-table"></table>
+            </div>
+        </div>
+        <div class="modal fade" id="create-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Добавить пользователя</h2>
+                        <button class="btn-close" data-bs-dismiss="modal" data-bs-target="#create-modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-floating">
+                            <input type="text" class="pole form-control mb-2" id="firstName-reg" placeholder="first name">
+                            <label for="firstName-reg" class="form-label">Имя</label>
+                            <div class="errors d-none mb-3 text-danger text-center" id="error-firstName"></div>
+                        </div>
+                        <div class="form-floating">
+                            <input type="text" class="pole form-control mb-2" id="lastName-reg" placeholder="last name">
+                            <label for="lastName-reg" class="form-label">Фамилия</label>
+                            <div class="errors d-none mb-3 text-danger text-center" id="error-lastName"></div>
+                        </div>
+                        <div class="form-floating">
+                            <input type="email" class="pole form-control mb-2" id="email-reg" placeholder="email">
+                            <label for="email-reg" class="form-label">Email</label>
+                            <div class="errors d-none mb-3 text-danger text-center" id="error-email"></div>
+                        </div>
+                        <div class="form-floating">
+                            <input type="password" class="pole form-control mb-2" id="password-reg" placeholder="password">
+                            <label for="password-reg" class="form-label">Пароль</label>
+                            <div class="errors d-none mb-3 text-danger text-center" id="error-password"></div>
+                        </div>
+                    <div class="modal-footer">
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-primary" id="add-user-button">Добавить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/admin_page.js"></script>
+</body>
+</html>

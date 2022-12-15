@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+
     const avatar_url = 'http://localhost:8080/avatar/get'
-    const data_url = 'http://localhost:8080/auth/profile'
+    const profile_data_url = 'http://localhost:8080/auth/profile'
 
     reloadAvatar(avatar_url)
+    let timer = setInterval(getTime, 1000)
 
     let userAuthorities
-    fetch(data_url, {
+    fetch(profile_data_url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -17,50 +19,74 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('first-name').textContent = data.firstName
             document.getElementById('last-name').textContent = data.lastName
             document.getElementById('session-count').textContent = data.loginsCount
-            document.getElementById('date-and-time').textContent = data.dateAndTime
             userAuthorities = data.role
-            let role = document.getElementById('role')
             let additionalContent
+            let role = document.getElementById('role')
             switch (userAuthorities) {
                 case ('[ROLE_USER]'):
                     role.textContent = '(Пользователь)'
                     role.style.color = '#080707'
                     additionalContent = `
-                    <div class="block flex-column">
-                        <button class="normal-button" id="user-button">Оставить заявку</button>
+                    <div class="btn-group-vertical">
+                        <a class="btn btn-primary mb-2" href="lot_page.html">Ваши лоты</a>
                     </div>`
-                    document.getElementById('roles-container').innerHTML += additionalContent
-                    makeRelocateButton('user-button', '../html/user-page.html')
+                    document.getElementById('role-content').innerHTML += additionalContent
                     break
                 case ('[ROLE_MODERATOR]'):
                     role.textContent = '(Модератор)'
                     role.style.color = '#3cc74a'
                     additionalContent = `
-                    <div class="block flex-column">
-                        <button class="normal-button" id="user-button">Оставить заявку</button>
-                        <button class="normal-button" id="mod-button">Управление новостями</button>
+                    <div class="btn-group-vertical">
+                        <a class="btn btn-primary mb-2" href="lot_page.html">Ваши лоты</a>
+                        <a class="btn btn-primary mb-2" href="moderator_page.html">Панель модератора</a>
                     </div>`
-                    document.getElementById('roles-container').innerHTML += additionalContent
-                    makeRelocateButton('user-button', '../html/user-page.html')
-                    makeRelocateButton('mod-button', '../html/mod-page.html')
+                    document.getElementById('role-content').innerHTML += additionalContent
                     break
                 case ('[ROLE_ADMIN]'):
                     role.textContent = '(Администратор)'
                     role.style.color = '#e00d23'
                     additionalContent = `
-                    <div class="block flex-column">
-                        <button class="normal-button" id="user-button">Оставить заявку</button>
-                        <button class="normal-button" id="mod-button">Управление новостями</button>
-                        <button class="normal-button" id="admin-button">Управление пользователями</button>
+                    <div class="btn-group-vertical">
+                        <a class="btn btn-primary mb-2" href="lot_page.html">Ваши лоты</a>
+                        <a class="btn btn-primary mb-2" href="moderator_page.html">Панель модератора</a>
+                        <a class="btn btn-primary mb-2" href="admin_page.html">Панель администратора</a>
                     </div>`
-                    document.getElementById('roles-container').innerHTML += additionalContent
-                    makeRelocateButton('user-button', '../html/user-page.html')
-                    makeRelocateButton('mod-button', '../html/mod-page.html')
-                    makeRelocateButton('admin-button', '../html/admin-page.html')
-                    break
-                default:
+                    document.getElementById('role-content').innerHTML += additionalContent
                     break
             }
+        } else if (response.status == 403) {
+            document.location.replace('../html/sign_in.html')
+        }
+    })
+})
+
+document.getElementById('send-photo').addEventListener('click', () => {
+    let image = document.getElementById('avatar-file').files[0]
+    if (image == null) {
+        return
+    }
+    document.getElementById('error-file').classList.add('d-none')
+    const upload_avatar_url = 'http://localhost:8080/avatar/send'
+    let formData = new FormData()
+    formData.append('image', image)
+    fetch(upload_avatar_url, {
+        method: 'PUT',
+        body: formData,
+        headers: {'Authorization': `Bearer ${sessionStorage.getItem('token')}`}
+    }).then(async response => {
+        if (response.ok) {
+            const avatar_url = 'http://localhost:8080/avatar/get'
+            reloadAvatar(avatar_url)
+        } else if (response.status == 406) {
+            let data = await response.json()
+            let element = document.getElementById('error-file')
+            element.classList.remove('d-none')
+            element.textContent = data.error
+        } else if (response.status == 417) {
+            let data = await response.json()
+            let element = document.getElementById('error-file')
+            element.classList.remove('d-none')
+            element.textContent = data.error
         }
     })
 })
@@ -75,35 +101,8 @@ document.getElementById('logout').addEventListener('click', e => {
         }
     }).then(response => {
         if (response.ok) {
+            sessionStorage.setItem('token', '')
             document.location.replace('../index.html')
-        }
-    })
-})
-
-document.getElementById('send-photo').addEventListener('click', e => {
-    document.getElementById('avatar-err').classList.add('hide')
-    const upload_avatar_url = 'http://localhost:8080/avatar/send'
-    let image = document.getElementById('photo').files[0]
-    let formData = new FormData()
-    formData.append('image', image)
-    fetch(upload_avatar_url, {
-        method: 'PUT',
-        body: formData,
-        headers: {'Authorization': `Bearer ${sessionStorage.getItem('token')}`}
-    }).then(async response => {
-        if (response.ok) {
-            const avatar_url = 'http://localhost:8080/avatar/get'
-            reloadAvatar(avatar_url)
-        } else if (response.status == 406) {
-            let data = await response.json()
-            let element = document.getElementById('avatar-err')
-            element.classList.remove('hide')
-            element.textContent = data.message
-        } else if (response.status == 417) {
-            let data = await response.json()
-            let element = document.getElementById('avatar-err')
-            element.classList.remove('hide')
-            element.textContent = data.message
         }
     })
 })
@@ -122,6 +121,22 @@ function reloadAvatar(url) {
         } else {
             let data = await response.json()
             document.getElementById('avatar-err').textContent = data.message;
+        }
+    })
+}
+
+function getTime() {
+    const time_url = 'http://localhost:8080/auth/time'
+    fetch(time_url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+        }
+    }).then(async response => {
+        if (response.ok) {
+            let data = await response.json()
+            document.getElementById('date-and-time').textContent = data.message
         }
     })
 }

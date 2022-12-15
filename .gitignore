@@ -3,4 +3,6 @@
 *.iml
 *.ipr
 
-images
+avatar_images
+news_images
+lot_files

@@ -3,14 +3,62 @@ document.addEventListener('DOMContentLoaded', () => {
         'delete-buttons', 'change-buttons')
 })
 
+document.getElementById('add-user-button').addEventListener('click', () => {
+
+    document.querySelectorAll('.pole').forEach(element => element.classList.remove('is-invalid'))
+    document.querySelectorAll('.errors').forEach(element => element.classList.add('d-none'))
+
+    const registrationData = {
+        "firstName": document.getElementById('firstName-reg').value,
+        "lastName": document.getElementById('lastName-reg').value,
+        "email": document.getElementById('email-reg').value,
+        "password": document.getElementById('password-reg').value
+    }
+
+    const url = 'http://localhost:8080/auth/signup'
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(registrationData)
+    }).then(async response => {
+        if (response.ok) {
+            let data = await response.json()
+            console.log(data.message)
+            loadTable(document.getElementById('users-table'),
+                'delete-buttons', 'change-buttons')
+        } else if (response.status == 400) {
+            let data = await response.json()
+            console.log(data)
+            let fields = Object.keys(data)
+            let errors = Object.values(data)
+            for (let i = 0; i < fields.length; i++) {
+                let errorEl = document.getElementById(`error-${fields[i]}`)
+                errorEl.textContent = errors[i]
+                errorEl.classList.remove('d-none')
+                document.getElementById(`${fields[i]}-reg`).classList.add('is-invalid')
+            }
+        } else if (response.status == 406) {
+            let data = await response.json()
+            let errorEl = document.getElementById(`error-${Object.keys(data)[0]}`)
+            errorEl.textContent = Object.values(data)[0];
+            errorEl.classList.remove('d-none')
+            document.getElementById(`${Object.keys(data)[0]}`).classList.add('is-invalid')
+        }
+    })
+})
+
 function createUsersTable(usersData) {
     let html = `
     <tr>
-        <td>Id пользователя</td>
-        <td>Имя пользователя</td>
-        <td>Фамилия пользователя</td>
-        <td>Email полльзователя</td>
-        <td>Роль пользователя</td>
+        <th>Id пользователя</th>
+        <th>Имя пользователя</th>
+        <th>Фамилия пользователя</th>
+        <th>Email полльзователя</th>
+        <th>Роль пользователя</th>
+        <th colspan="3">Контроллеры</th>
     </tr>`
     for (let i = 0; i < usersData.length; i++) {
         let additionalHtml = `
@@ -20,15 +68,15 @@ function createUsersTable(usersData) {
             <td>${usersData[i].lastName}</td>
             <td>${usersData[i].email}</td>
             <td id="table-role-${i}">${usersData[i].role}</td>
-            <td><button id="delete-${i}" class="delete-buttons">Удалить</button></td>
+            <td><button id="delete-${i}" class="btn btn-primary btn-sm">Удалить</button></td>
             <td>
-                <select id="select-${i}">
+                <select class="form-select form-select-sm" id="select-${i}">
                     <option value="ROLE_USER">Пользователь</option>
                     <option value="ROLE_MODERATOR">Модератор</option>
                     <option value="ROLE_ADMIN">Администратор</option>
                 </select>
             </td>
-            <td><button id="change-${i}" class="change-buttons">Изменить роль</button></td>
+            <td><button id="change-${i}" class="btn btn-primary btn-sm">Изменить роль</button></td>
         </tr>`
         html += additionalHtml
     }
