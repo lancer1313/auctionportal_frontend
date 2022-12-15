@@ -17,6 +17,14 @@ document.getElementById('create-lot-button').addEventListener('click', () => {
     document.querySelectorAll('.pole').forEach(element => element.classList.remove('is-invalid'))
     document.querySelectorAll('.errors').forEach(element => element.classList.add('d-none'))
 
+    if (document.getElementById('lotDescription-create').value.length > 500) {
+        let errorEl = document.getElementById(`error-lotDescription-create`)
+        errorEl.textContent = 'Превышен максимум символов'
+        errorEl.classList.remove('d-none')
+        document.getElementById('lotDescription-create').classList.add('is-invalid')
+        return
+    }
+
     const create_url = 'http://localhost:8080/lots/create'
 
     let formData = new FormData()
@@ -124,6 +132,14 @@ function addEventsToButtons(buttonType, lotsData) {
                         document.getElementById('success-redact').classList.add('d-none')
                         document.querySelectorAll('.pole').forEach(element => element.classList.remove('is-invalid'))
                         document.querySelectorAll('.errors').forEach(element => element.classList.add('d-none'))
+
+                        if (document.getElementById('lotDescription-redact').value.length > 500) {
+                            let errorEl = document.getElementById(`error-lotDescription-redact`)
+                            errorEl.textContent = 'Превышен максимум символов'
+                            errorEl.classList.remove('d-none')
+                            document.getElementById('lotDescription-redact').classList.add('is-invalid')
+                            return
+                        }
 
                         const redact_url = `http://localhost:8080/lots/redact/${lotsData[i].id}`
 

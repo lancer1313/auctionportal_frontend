@@ -2,11 +2,24 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTable(document.getElementById('news-table'), 'delete-buttons', 'redact-buttons')
 })
 
+document.getElementById('delete-file-button').addEventListener('click', e => {
+    e.preventDefault()
+    document.getElementById('image-redact').value = ''
+})
+
 document.getElementById('create-news-button').addEventListener('click', () => {
 
     document.getElementById('success-create').classList.add('d-none')
     document.querySelectorAll('.pole').forEach(element => element.classList.remove('is-invalid'))
     document.querySelectorAll('.errors').forEach(element => element.classList.add('d-none'))
+
+    if (document.getElementById('text-create').value.length > 2000) {
+        let errorEl = document.getElementById(`error-text-create`)
+        errorEl.textContent = 'Превышен максимум символов'
+        errorEl.classList.remove('d-none')
+        document.getElementById('text-create').classList.add('is-invalid')
+        return
+    }
 
     const create_url = 'http://localhost:8080/news/create'
 
@@ -92,7 +105,7 @@ function addEventsToButtons(buttonType, newsData) {
                     }).then(async response => {
                         if (response.ok) {
                             let data = await response.json()
-                            alert(`Новость с id=${data.message} была удалена`)
+                            alert(`${data.message}`)
                             loadTable(document.getElementById('news-table'), 'delete-buttons', 'redact-buttons')
                         }
                     })
@@ -107,13 +120,21 @@ function addEventsToButtons(buttonType, newsData) {
                     document.getElementById('title-redact').value = newsData[i].title
                     document.getElementById('text-redact').value = newsData[i].text
                     document.getElementById('selected-image-div').textContent =
-                        newsData[i].fileName == null ? 'Изображение не выбрано' : newsData[i].fileName
+                        newsData[i].fileName == null ? 'Изображение не выбрано' : `Текущее изображение: ${newsData[i].fileName}`
 
                     document.getElementById('main-redact-button').addEventListener('click', () => {
 
                         document.getElementById('success-redact').classList.add('d-none')
                         document.querySelectorAll('.pole').forEach(element => element.classList.remove('is-invalid'))
                         document.querySelectorAll('.errors').forEach(element => element.classList.add('d-none'))
+
+                        if (document.getElementById('text-redact').value.length > 2000) {
+                            let errorEl = document.getElementById(`error-text-redact`)
+                            errorEl.textContent = 'Превышен максимум символов'
+                            errorEl.classList.remove('d-none')
+                            document.getElementById('text-redact').classList.add('is-invalid')
+                            return
+                        }
 
                         const redact_url = `http://localhost:8080/news/redact/${newsData[i].id}`
 

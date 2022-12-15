@@ -42,8 +42,8 @@
                                 <div class="errors d-none mb-3 text-danger text-center" id="error-title-create"></div>
                             </div>
                             <div class="form-floating">
-                                <textarea type="" class="pole form-control mb-3" id="text-create" placeholder="title"></textarea>
-                                <label for="text-create" class="form-label">Текст</label>
+                                <textarea class="pole form-control mb-3" id="text-create" placeholder="title"></textarea>
+                                <label for="text-create" class="form-label">Текст (до 2000 символов)</label>
                                 <div class="errors d-none mb-3 text-danger text-center" id="error-text-create"></div>
                             </div>
                             <label for="image-create" class="form-label">Прикрепленное изображение</label>
@@ -76,11 +76,14 @@
                             </div>
                             <div class="form-floating">
                                 <textarea type="" class="pole form-control mb-3" id="text-redact" placeholder="title"></textarea>
-                                <label for="text-redact" class="form-label">Текст</label>
+                                <label for="text-redact" class="form-label">Текст (до 2000 символов)</label>
                                 <div class="errors d-none mb-3 text-danger text-center" id="error-text-redact"></div>
                             </div>
+                            <div class="mb-3 text-danger text-center">Редактирование по умолчанию происходит без картинки!
+                                Если вам нужно сохранить предыдущее фото, добавьте его снова (спасибо type="file")</div>
                             <label for="image-redact" class="form-label">Прикрепленное изображение</label>
                             <input type="file" class="pole form-control mb-3" id="image-redact" placeholder="title">
+                            <button class="btn btn-primary mb-3" id="delete-file-button">Убрать файл</button>
                             <div class="mb-3 text-center" id="selected-image-div"></div>
                             <div class="errors d-none mb-3 text-danger text-center" id="error-image-redact"></div>
                             <div class="d-none mb-3 text-success text-center" id="success-redact"></div>
