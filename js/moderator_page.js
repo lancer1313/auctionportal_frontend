@@ -2,14 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTable(document.getElementById('news-table'), 'delete-buttons', 'redact-buttons')
 })
 
-document.getElementById('delete-file-button').addEventListener('click', e => {
-    e.preventDefault()
-    document.getElementById('image-redact').value = ''
+document.getElementById('create-news-dialog-button').addEventListener('click', () => {
+    document.getElementById('title-create').value = ''
+    document.getElementById('text-create').value = ''
+    document.getElementById('image-create').value = ''
 })
 
 document.getElementById('create-news-button').addEventListener('click', () => {
 
-    document.getElementById('success-create').classList.add('d-none')
     document.querySelectorAll('.pole').forEach(element => element.classList.remove('is-invalid'))
     document.querySelectorAll('.errors').forEach(element => element.classList.add('d-none'))
 
@@ -37,9 +37,8 @@ document.getElementById('create-news-button').addEventListener('click', () => {
     }).then(async response => {
         if (response.ok) {
             let data = await response.json()
-            let successEl = document.getElementById('success-create')
-            successEl.textContent = data.message
-            successEl.classList.remove('d-none')
+            alert(`${data.message}`)
+            bootstrap.Modal.getInstance(document.getElementById('create-modal')).hide()
             loadTable(document.getElementById('news-table'), 'delete-buttons', 'redact-buttons')
         } else if (response.status == 400) {
             let data = await response.json()
@@ -115,7 +114,8 @@ function addEventsToButtons(buttonType, newsData) {
         case 'redact-buttons':
             for (let i = 0; i < newsData.length; i++) {
                 document.getElementById(`redact-button-${i}`).addEventListener('click', () => {
-                    document.getElementById('success-redact').classList.add('d-none')
+
+                    addActionToDeleteFileButton(newsData[i].id)
 
                     document.getElementById('title-redact').value = newsData[i].title
                     document.getElementById('text-redact').value = newsData[i].text
@@ -124,7 +124,6 @@ function addEventsToButtons(buttonType, newsData) {
 
                     document.getElementById('main-redact-button').addEventListener('click', () => {
 
-                        document.getElementById('success-redact').classList.add('d-none')
                         document.querySelectorAll('.pole').forEach(element => element.classList.remove('is-invalid'))
                         document.querySelectorAll('.errors').forEach(element => element.classList.add('d-none'))
 
@@ -153,9 +152,8 @@ function addEventsToButtons(buttonType, newsData) {
                         }).then(async response => {
                             if (response.ok) {
                                 let data = await response.json()
-                                let successEl = document.getElementById('success-redact')
-                                successEl.textContent = data.message
-                                successEl.classList.remove('d-none')
+                                alert(`${data.message}`)
+                                bootstrap.Modal.getInstance(document.getElementById('redact-modal')).hide()
                                 loadTable(document.getElementById('news-table'), 'delete-buttons', 'redact-buttons')
                             } else if (response.status == 400) {
                                 let data = await response.json()
@@ -201,5 +199,22 @@ function loadTable(tableEl, ...buttonTypes) {
         } else if (response.status == 403) {
             document.location.replace('../html/profile.html')
         }
+    })
+}
+
+function addActionToDeleteFileButton(id) {
+    document.getElementById('delete-file-button').addEventListener('click', e => {
+        e.preventDefault()
+        let redact_image_url = `http://localhost:8080/news/redact_file/${id}`
+
+        fetch(redact_image_url, {
+            method: 'PUT',
+            headers: {'Authorization': `Bearer ${sessionStorage.getItem('token')}`}
+        }).then(async response => {
+            if (response.ok) {
+                let data = await response.json()
+                document.getElementById('selected-image-div').textContent = data.message
+            }
+        })
     })
 }

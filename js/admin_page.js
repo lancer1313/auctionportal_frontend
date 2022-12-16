@@ -3,6 +3,13 @@ document.addEventListener('DOMContentLoaded', () => {
         'delete-buttons', 'change-buttons')
 })
 
+document.getElementById('create-user-dialog-button').addEventListener('click', () => {
+    document.getElementById('firstName-reg').value = ''
+    document.getElementById('lastName-reg').value = ''
+    document.getElementById('email-reg').value = ''
+    document.getElementById('password-reg').value = ''
+})
+
 document.getElementById('add-user-button').addEventListener('click', () => {
 
     document.querySelectorAll('.pole').forEach(element => element.classList.remove('is-invalid'))
@@ -26,7 +33,8 @@ document.getElementById('add-user-button').addEventListener('click', () => {
     }).then(async response => {
         if (response.ok) {
             let data = await response.json()
-            console.log(data.message)
+            alert(`${data.message}`)
+            bootstrap.Modal.getInstance(document.getElementById('create-modal')).hide()
             loadTable(document.getElementById('users-table'),
                 'delete-buttons', 'change-buttons')
         } else if (response.status == 400) {

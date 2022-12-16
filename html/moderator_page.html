@@ -18,7 +18,8 @@
             </div>
             <div class="row mb-2">
                 <div class="col-1">
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-modal">Создать новость</button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-modal"
+                            id="create-news-dialog-button">Создать новость</button>
                 </div>
             </div>
         </div>
@@ -49,7 +50,6 @@
                             <label for="image-create" class="form-label">Прикрепленное изображение</label>
                             <input type="file" class="pole form-control mb-3" id="image-create" placeholder="title">
                             <div class="errors d-none mb-3 text-danger text-center" id="error-image-create"></div>
-                            <div class="d-none mb-3 text-success text-center" id="success-create"></div>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -79,14 +79,11 @@
                                 <label for="text-redact" class="form-label">Текст (до 2000 символов)</label>
                                 <div class="errors d-none mb-3 text-danger text-center" id="error-text-redact"></div>
                             </div>
-                            <div class="mb-3 text-danger text-center">Редактирование по умолчанию происходит без картинки!
-                                Если вам нужно сохранить предыдущее фото, добавьте его снова (спасибо type="file")</div>
                             <label for="image-redact" class="form-label">Прикрепленное изображение</label>
                             <input type="file" class="pole form-control mb-3" id="image-redact" placeholder="title">
                             <button class="btn btn-primary mb-3" id="delete-file-button">Убрать файл</button>
                             <div class="mb-3 text-center" id="selected-image-div"></div>
                             <div class="errors d-none mb-3 text-danger text-center" id="error-image-redact"></div>
-                            <div class="d-none mb-3 text-success text-center" id="success-redact"></div>
                         </form>
                     </div>
                     <div class="modal-footer">
