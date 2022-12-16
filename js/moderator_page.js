@@ -2,7 +2,20 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTable(document.getElementById('news-table'), 'delete-buttons', 'redact-buttons')
 })
 
+document.getElementById('text-create').addEventListener('input', () => {
+    document.getElementById('label-text-create').textContent =
+        `Описание лота (до 500 символов) (сейчас ${document.getElementById('text-create').value.length})`
+})
+
+document.getElementById('text-redact').addEventListener('input', () => {
+    document.getElementById('label-text-redact').textContent =
+        `Описание лота (до 500 символов) (сейчас ${document.getElementById('text-redact').value.length})`
+})
+
 document.getElementById('create-news-dialog-button').addEventListener('click', () => {
+    document.querySelectorAll('.pole').forEach(element => element.classList.remove('is-invalid'))
+    document.querySelectorAll('.errors').forEach(element => element.classList.add('d-none'))
+
     document.getElementById('title-create').value = ''
     document.getElementById('text-create').value = ''
     document.getElementById('image-create').value = ''

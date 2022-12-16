@@ -42,11 +42,9 @@
                                 <label for="title-create" class="form-label">Заголовок новости</label>
                                 <div class="errors d-none mb-3 text-danger text-center" id="error-title-create"></div>
                             </div>
-                            <div class="form-floating">
-                                <textarea class="pole form-control mb-3" id="text-create" placeholder="title"></textarea>
-                                <label for="text-create" class="form-label">Текст (до 2000 символов)</label>
-                                <div class="errors d-none mb-3 text-danger text-center" id="error-text-create"></div>
-                            </div>
+                            <label for="text-create" class="form-label" id="label-text-create">Текст (до 2000 символов)</label>
+                            <textarea class="pole form-control mb-3" id="text-create" placeholder="Текст"></textarea>
+                            <div class="errors d-none mb-3 text-danger text-center" id="error-text-create"></div>
                             <label for="image-create" class="form-label">Прикрепленное изображение</label>
                             <input type="file" class="pole form-control mb-3" id="image-create" placeholder="title">
                             <div class="errors d-none mb-3 text-danger text-center" id="error-image-create"></div>
@@ -74,11 +72,9 @@
                                 <label for="title-redact" class="form-label">Заголовок новости</label>
                                 <div class="errors d-none mb-3 text-danger text-center" id="error-title-redact"></div>
                             </div>
-                            <div class="form-floating">
-                                <textarea type="" class="pole form-control mb-3" id="text-redact" placeholder="title"></textarea>
-                                <label for="text-redact" class="form-label">Текст (до 2000 символов)</label>
-                                <div class="errors d-none mb-3 text-danger text-center" id="error-text-redact"></div>
-                            </div>
+                            <label for="text-redact" class="form-label" id="label-text-redact">Текст (до 2000 символов)</label>
+                            <textarea type="" class="pole form-control mb-3" id="text-redact" placeholder="title"></textarea>
+                            <div class="errors d-none mb-3 text-danger text-center" id="error-text-redact"></div>
                             <label for="image-redact" class="form-label">Прикрепленное изображение</label>
                             <input type="file" class="pole form-control mb-3" id="image-redact" placeholder="title">
                             <button class="btn btn-primary mb-3" id="delete-file-button">Убрать файл</button>

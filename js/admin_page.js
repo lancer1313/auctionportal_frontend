@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 document.getElementById('create-user-dialog-button').addEventListener('click', () => {
+    document.querySelectorAll('.pole').forEach(element => element.classList.remove('is-invalid'))
+    document.querySelectorAll('.errors').forEach(element => element.classList.add('d-none'))
+
     document.getElementById('firstName-reg').value = ''
     document.getElementById('lastName-reg').value = ''
     document.getElementById('email-reg').value = ''

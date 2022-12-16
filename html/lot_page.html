@@ -41,11 +41,9 @@
                                 <label for="lotTitle-create" class="form-label">Название лота</label>
                                 <div class="errors d-none mb-3 text-danger text-center" id="error-lotTitle-create"></div>
                             </div>
-                            <div class="form-floating">
-                                <textarea class="pole form-control mb-3" id="lotDescription-create" placeholder="description"></textarea>
-                                <label for="lotDescription-create" class="form-label">Описание лота (до 500 символов)</label>
-                                <div class="errors d-none mb-3 text-danger text-center" id="error-lotDescription-create"></div>
-                            </div>
+                            <label for="lotDescription-create" class="form-label" id="label-lotDescription-create">Описание лота (до 500 символов)</label>
+                            <textarea class="pole form-control mb-3" id="lotDescription-create" placeholder="Описание лота"></textarea>
+                            <div class="errors d-none mb-3 text-danger text-center" id="error-lotDescription-create"></div>
                             <div class="form-floating">
                                 <input type="text" class="pole form-control mb-3" id="startingPrice-create" placeholder="title">
                                 <label for="startingPrice-create" class="form-label">Начальная цена</label>
@@ -59,7 +57,6 @@
                             <label for="file-create" class="form-label"></label>
                             <input type="file" class="form-control mb-3" id="file-create" placeholder="title">
                             <div class="errors d-none mb-3 text-danger text-center" id="error-file-create"></div>
-                            <div class="d-none mb-3 text-success text-center" id="success-create"></div>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -84,11 +81,9 @@
                                 <label for="lotTitle-redact" class="form-label">Название лота</label>
                                 <div class="errors d-none mb-3 text-danger text-center" id="error-lotTitle-redact"></div>
                             </div>
-                            <div class="form-floating">
-                                <textarea class="pole form-control mb-3" id="lotDescription-redact" placeholder="description"></textarea>
-                                <label for="lotDescription-redact" class="form-label">Описание лота (до 500 символов)</label>
-                                <div class="errors d-none mb-3 text-danger text-center" id="error-lotDescription-redact"></div>
-                            </div>
+                            <label for="lotDescription-redact" class="form-label" id="label-lotDescription-redact">Описание лота (до 500 символов)</label>
+                            <textarea class="pole form-control mb-3" id="lotDescription-redact" placeholder="Описание лота"></textarea>
+                            <div class="errors d-none mb-3 text-danger text-center" id="error-lotDescription-redact"></div>
                             <div class="form-floating">
                                 <input type="text" class="pole form-control mb-3" id="startingPrice-redact" placeholder="title">
                                 <label for="startingPrice-redact" class="form-label">Начальная цена</label>
@@ -103,7 +98,6 @@
                             <input type="file" class="form-control mb-3" id="file-redact" placeholder="title">
                             <div class="mb-3 text-center" id="selected-file-div"></div>
                             <div class="errors d-none mb-3 text-danger text-center" id="error-file-redact"></div>
-                            <div class="d-none mb-3 text-success text-center" id="success-redact"></div>
                         </form>
                     </div>
                     <div class="modal-footer">

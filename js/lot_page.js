@@ -2,8 +2,20 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTable(document.getElementById('lots-table'), 'delete-buttons', 'redact-buttons')
 })
 
+document.getElementById('lotDescription-create').addEventListener('input', () => {
+    document.getElementById('label-lotDescription-create').textContent =
+        `Описание лота (до 500 символов) (сейчас ${document.getElementById('lotDescription-create').value.length})`
+})
+
+document.getElementById('lotDescription-redact').addEventListener('input', () => {
+    document.getElementById('label-lotDescription-redact').textContent =
+        `Описание лота (до 500 символов) (сейчас ${document.getElementById('lotDescription-redact').value.length})`
+})
+
 document.getElementById('create-lot-dialog-button').addEventListener('click', () => {
-    document.getElementById('success-create').classList.add('d-none')
+    document.querySelectorAll('.pole').forEach(element => element.classList.remove('is-invalid'))
+    document.querySelectorAll('.errors').forEach(element => element.classList.add('d-none'))
+
     document.getElementById('lotTitle-create').value = ''
     document.getElementById('lotDescription-create').value = ''
     document.getElementById('startingPrice-create').value = ''
@@ -13,7 +25,6 @@ document.getElementById('create-lot-dialog-button').addEventListener('click', ()
 
 document.getElementById('create-lot-button').addEventListener('click', () => {
 
-    document.getElementById('success-create').classList.add('d-none')
     document.querySelectorAll('.pole').forEach(element => element.classList.remove('is-invalid'))
     document.querySelectorAll('.errors').forEach(element => element.classList.add('d-none'))
 
@@ -43,9 +54,8 @@ document.getElementById('create-lot-button').addEventListener('click', () => {
     }).then(async response => {
         if (response.ok) {
             let data = await response.json()
-            let successEl = document.getElementById('success-create')
-            successEl.textContent = data.message
-            successEl.classList.remove('d-none')
+            alert(`${data.message}`)
+            bootstrap.Modal.getInstance(document.getElementById('create-modal')).hide()
             loadTable(document.getElementById('lots-table'), 'delete-buttons', 'redact-buttons')
         } else if (response.status == 400) {
             let data = await response.json()
@@ -129,7 +139,6 @@ function addEventsToButtons(buttonType, lotsData) {
 
                     document.getElementById('main-redact-button').addEventListener('click', () => {
 
-                        document.getElementById('success-redact').classList.add('d-none')
                         document.querySelectorAll('.pole').forEach(element => element.classList.remove('is-invalid'))
                         document.querySelectorAll('.errors').forEach(element => element.classList.add('d-none'))
 
@@ -160,9 +169,8 @@ function addEventsToButtons(buttonType, lotsData) {
                         }).then(async response => {
                             if (response.ok) {
                                 let data = await response.json()
-                                let successEl = document.getElementById('success-redact')
-                                successEl.textContent = data.message
-                                successEl.classList.remove('d-none')
+                                alert(`${data.message}`)
+                                bootstrap.Modal.getInstance(document.getElementById('redact-modal')).hide()
                                 loadTable(document.getElementById('lots-table'), 'delete-buttons', 'redact-buttons')
                             } else if (response.status == 400) {
                                 let data = await response.json()
